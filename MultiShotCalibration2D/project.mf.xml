@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<manifest>
+    <application name="MultiShotCalibration2D">
+        <crown name="MultiShotCalibration2D">
+            <desc>user script</desc>
+            <serves/>
+        </crown>
+        <meta key="author">AppSpace Sample</meta>
+        <meta key="version">2.5.0</meta>
+        <meta key="licensed">false</meta>
+        <meta key="priority">low</meta>
+        <meta key="tags">Algorithm,Image,Calibration</meta>
+        <meta key="read-protected">false</meta>
+        <meta key="copy-protected">false</meta>
+        <entry path="pages" default="Viewer.msdd">
+            <file type="application/zip">Viewer.msdd</file>
+        </entry>
+        <entry path="resources">
+            <file type="image">camera/0.bmp</file>
+            <file type="image">camera/1.bmp</file>
+            <file type="image">camera/2.bmp</file>
+            <file type="image">camera/3.bmp</file>
+            <file type="image">camera/4.bmp</file>
+            <file type="image">camera/5.bmp</file>
+            <file type="image">camera/6.bmp</file>
+            <file type="image">camera/7.bmp</file>
+            <file type="image">camera/8.bmp</file>
+            <file type="image">camera/9.bmp</file>
+            <file type="image">pose/pose.bmp</file>
+        </entry>
+        <entry path="scripts" default="MultiShotCalibration2D.lua">
+            <file type="text/x-lua">MultiShotCalibration2D.lua</file>
+        </entry>
+    </application>
+</manifest>
