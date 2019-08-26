@@ -12,8 +12,8 @@
         <meta key="tags">Algorithm,Image,Calibration</meta>
         <meta key="read-protected">false</meta>
         <meta key="copy-protected">false</meta>
-        <entry path="pages" default="Viewer.msdd">
-            <file type="application/zip">Viewer.msdd</file>
+        <entry path="pages" default="AppSpaceViewers-2.5.0.0.msdd">
+            <file type="application/zip">AppSpaceViewers-2.5.0.0.msdd</file>
         </entry>
         <entry path="resources">
             <file type="image">camera/0.bmp</file>
@@ -28,8 +28,10 @@
             <file type="image">camera/9.bmp</file>
             <file type="image">pose/pose.bmp</file>
         </entry>
-        <entry path="scripts" default="MultiShotCalibration2D.lua">
-            <file type="text/x-lua">MultiShotCalibration2D.lua</file>
+        <entry path="scripts" default="main.lua">
+            <file type="text/x-lua">ImageLoader.lua</file>
+            <file type="text/x-lua">main.lua</file>
+            <file type="text/x-lua">ViewExtensions.lua</file>
         </entry>
     </application>
 </manifest>
