@@ -46,7 +46,7 @@ local DELAY = 1000
 
 --Start of Function and Event Scope---------------------------------------------
 local function main()
-  local viewer = View.create()
+  local viewer = View.create("viewer2D1")
 
   local countDeco = View.TextDecoration.create()
   countDeco:setColor(255, 255, 255)
