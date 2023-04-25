@@ -1,3 +1,6 @@
+
+---@param folder string
+---@return string[]
 local function getImageFiles(folder)
   local files = {}
   local extensions = {'.png', '.bmp', '.jpg', '.jpeg'}
@@ -10,10 +13,13 @@ local function getImageFiles(folder)
   return files
 end
 
+---@param folder string
+---@return function
 local function getImageLoader(folder)
   local files = getImageFiles(folder)
   local file_it = 1
 
+  ---@return Image | nil
   return function()
     if file_it > #files then
       return nil

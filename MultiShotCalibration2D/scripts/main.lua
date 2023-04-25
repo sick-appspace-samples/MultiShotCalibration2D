@@ -19,7 +19,7 @@ local DELAY = 1000
 
 --Start of Function and Event Scope---------------------------------------------
 local function main()
-  local viewer = View.create("viewer2D1")
+  local viewer = View.create()
 
   local countDeco = View.TextDecoration.create()
   countDeco:setColor(255, 255, 255)
@@ -68,13 +68,13 @@ local function main()
 
       -- Plot data
       viewer:clear()
-      local imid = viewer:addImage(image)
-      viewer:addShape(p2d, pdeco, nil, imid)
-      viewer:addAreaFeedback(imid, coverage)
-      viewer:addTiltXFeedback(imid, tiltX, width, height)
-      viewer:addTiltYFeedback(imid, tiltY, width, height)
-      viewer:addDistanceFeedback(imid, distance, width, height, boxWidth / 2)
-      viewer:addText('Added: ' .. tostring(#area), countDeco, nil, imid)
+      viewer:addImage(image)
+      viewer:addShape(p2d, pdeco)
+      viewer:addAreaFeedback(coverage)
+      viewer:addTiltXFeedback(tiltX, width, height)
+      viewer:addTiltYFeedback(tiltY, width, height)
+      viewer:addDistanceFeedback(distance, width, height, boxWidth / 2)
+      viewer:addText('Added: ' .. tostring(#area), countDeco)
       viewer:present()
     end
 
@@ -97,8 +97,8 @@ local function main()
   local poseImage = Image.load(resourcefolder .. poseImageFile)
   local squareSize = 15.09
   viewer:clear()
-  local imid = viewer:addImage(poseImage)
-  viewer:addText('Pose calibration', text, nil, imid)
+  viewer:addImage(poseImage)
+  viewer:addText('Pose calibration', text)
   viewer:present()
   Script.sleep(DELAY) -- For demonstration purpose only
 
@@ -115,8 +115,8 @@ local function main()
   correction:setUndistortMode(modelWithPose, 'VALID')
   local correctedImage = correction:apply(poseImage)
   viewer:clear()
-  imid = viewer:addImage(correctedImage)
-  viewer:addText('Undistort mode', text, nil, imid)
+  viewer:addImage(correctedImage)
+  viewer:addText('Undistort mode', text)
   viewer:present()
   Script.sleep(DELAY) -- For demonstration purpose only
 
@@ -128,8 +128,8 @@ local function main()
   correction:setUntiltMode(modelWithPose, 'FULL')
   correctedImage = correction:apply(poseImage)
   viewer:clear()
-  imid = viewer:addImage(correctedImage)
-  viewer:addText('Untilt mode', text, nil, imid)
+  viewer:addImage(correctedImage)
+  viewer:addText('Untilt mode', text)
   viewer:present()
   Script.sleep(DELAY) -- For demonstration purpose only
 
@@ -140,8 +140,8 @@ local function main()
   correction:setAlignMode(modelWithPose, worldRectangle)
   correctedImage = correction:apply(poseImage)
   viewer:clear()
-  imid = viewer:addImage(correctedImage)
-  viewer:addText('Align mode', text, nil, imid)
+  viewer:addImage(correctedImage)
+  viewer:addText('Align mode', text)
   viewer:present()
   print('App finished.')
 end
