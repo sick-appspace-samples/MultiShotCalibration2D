@@ -1,3 +1,9 @@
+
+---@param vector number[]
+---@param count int
+---@param lower int
+---@param upper int
+---@return table
 local function getHistogram(vector, count, lower, upper)
   local binsize = (upper - lower) / count
   local hist = {}
@@ -11,6 +17,11 @@ local function getHistogram(vector, count, lower, upper)
   return hist
 end
 
+---@param vector number[]
+---@param stepx number
+---@param height int
+---@param steps int
+---@return Shape
 local function getPolyline(vector, stepx, height, steps)
   local poly = {}
 
@@ -21,7 +32,9 @@ local function getPolyline(vector, stepx, height, steps)
   return Shape.createPolyline(poly, false)
 end
 
-local function addAreaFeedback(self, parent, score)
+---@param self any
+---@param score Image
+local function addAreaFeedback(self, score)
   local imw, imh = score:getSize()
   local w, h = score:getPixelSize()
 
@@ -36,12 +49,17 @@ local function addAreaFeedback(self, parent, score)
       deco:setFillColor(red, green, 0, 120)
       deco:setLineColor(255, 255, 255, 120)
       deco:setLineWidth(1)
-      self:addShape(shape, deco, nil, parent)
+      self:addShape(shape, deco)
     end
   end
 end
 
-local function addDistanceFeedback(self, parent, distance, xpos, height, pad)
+---@param self any
+---@param distance number[]
+---@param xpos float
+---@param height float
+---@param pad float
+local function addDistanceFeedback(self, distance, xpos, height, pad)
   local maxDistance, minDistance
   if #distance > 1 then
     maxDistance = distance[1]
@@ -62,12 +80,12 @@ local function addDistanceFeedback(self, parent, distance, xpos, height, pad)
   local rulerDeco = View.ShapeDecoration.create()
   rulerDeco:setLineColor(255, 255, 255, 120)
   rulerDeco:setLineWidth(1)
-  self:addShape(Shape.createLineSegment(Point.create(xpos, 0), Point.create(xpos, height)), rulerDeco, nil, parent)
+  self:addShape(Shape.createLineSegment(Point.create(xpos, 0), Point.create(xpos, height)), rulerDeco)
   local step_count = math.max(1, math.ceil((maxDistance - minDistance) * height / 200))
   local step = height / step_count
   for i = 0, step_count do
     local ypos = step * i
-    self:addShape(Shape.createLineSegment(Point.create(xpos + pad, ypos), Point.create(xpos, ypos)), rulerDeco, nil, parent)
+    self:addShape(Shape.createLineSegment(Point.create(xpos + pad, ypos), Point.create(xpos, ypos)), rulerDeco)
   end
 
   -- Draw observations along the ruler
@@ -78,7 +96,7 @@ local function addDistanceFeedback(self, parent, distance, xpos, height, pad)
   local deco = View.ShapeDecoration.create()
   deco:setLineColor(255, 255, 255, 180)
   deco:setLineWidth(height / 200)
-  self:addShape(poly, deco, nil, parent)
+  self:addShape(poly, deco)
 
   -- Put labels on the ruler
   local fontScale = height / 60
@@ -86,12 +104,16 @@ local function addDistanceFeedback(self, parent, distance, xpos, height, pad)
   labeldeco:setSize(2 * fontScale)
   labeldeco:setColor(255, 255, 255, 180)
   labeldeco:setPosition(xpos + fontScale, fontScale)
-  self:addText(tostring(math.floor(minDistance)), labeldeco, nil, parent)
+  self:addText(tostring(math.floor(minDistance)), labeldeco)
   labeldeco:setPosition(xpos + fontScale, height - fontScale * 2)
-  self:addText(tostring(math.ceil(maxDistance)), labeldeco, nil, parent)
+  self:addText(tostring(math.ceil(maxDistance)), labeldeco)
 end
 
-local function addTiltXFeedback(self, parent, tilt, width, height)
+---@param self any
+---@param tilt number[]
+---@param width number
+---@param height number
+local function addTiltXFeedback(self, tilt, width, height)
   local bincount = 7
   local hist = getHistogram(tilt, bincount, -1, 1)
   local poly = getPolyline(hist, width / (bincount - 1), height / 8, 2)
@@ -99,7 +121,7 @@ local function addTiltXFeedback(self, parent, tilt, width, height)
   local T = Transform.createFromMatrix2D(Matrix.createFromVector(
     {
       0, 1, 0,
-      1, 0, 0, 
+      1, 0, 0,
       0, 0, 1
     }, 3, 3))
   poly = Shape.transform(poly, T)
@@ -107,10 +129,14 @@ local function addTiltXFeedback(self, parent, tilt, width, height)
   local deco = View.ShapeDecoration.create()
   deco:setLineColor(255, 153, 51)
   deco:setLineWidth(height / 150)
-  self:addShape(poly, deco, nil, parent)
+  self:addShape(poly, deco)
 end
 
-local function addTiltYFeedback(self, parent, tilt, width, height)
+---@param self any
+---@param tilt number[]
+---@param width number
+---@param height number
+local function addTiltYFeedback(self, tilt, width, height)
   local bincount = 7
   local hist = getHistogram(tilt, bincount, -1, 1)
   local poly = getPolyline(hist, height / (bincount - 1), width / 8, 2)
@@ -118,7 +144,7 @@ local function addTiltYFeedback(self, parent, tilt, width, height)
   local deco = View.ShapeDecoration.create()
   deco:setLineColor(0, 136, 194)
   deco:setLineWidth(height / 150)
-  self:addShape(poly, deco, nil, parent)
+  self:addShape(poly, deco)
 end
 
 _G['View']['addAreaFeedback'] = addAreaFeedback
